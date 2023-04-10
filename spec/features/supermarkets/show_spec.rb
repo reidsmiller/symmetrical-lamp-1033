@@ -1,12 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe Supermarket, type: :model do
-  describe 'relationships' do
-    it { should have_many :items }
-    it { should have_many(:customers).through(:items)}
-  end
-
-  describe 'instance methods' do
+RSpec.describe "/supermarkets/:supermarket_id", type: :feature do
+  describe 'As a visitor when I visit a supermarkets show page' do
     before(:each) do
       @customer_1 = Customer.create!(name: 'Bob Saget')
       @customer_2 = Customer.create!(name: 'Alison Brie')
@@ -27,10 +22,15 @@ RSpec.describe Supermarket, type: :model do
       CustomerItem.create!(customer_id: @customer_3.id, item_id: @item_1.id)
     end
 
-    describe '.distinct_customers' do
-      it 'can filter duplicates to distinct customers' do
-        expect(@supermarket.distinct_customers).to eq([@customer_1, @customer_2, @customer_3])
-      end
+    it 'I see a unique list of all customers that have shopped at the supermarket' do
+      visit "/supermarkets/#{@supermarket.id}"
+
+      expect(page).to have_content(@supermarket.name)
+      expect(page).to have_content("All Customers Visited")
+      expect(page).to have_content(@customer_1.name)
+      expect(page).to have_content(@customer_2.name)
+      expect(page).to have_content(@customer_3.name)
+      expect(page).to_not have_content(@customer_4.name)
     end
   end
 end
