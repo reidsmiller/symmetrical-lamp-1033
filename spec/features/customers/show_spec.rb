@@ -18,7 +18,6 @@ RSpec.describe '/customers/:customer_id', type: :feature do
     it 'I see the customers name and a list of its items including price and name of supermarket' do
       visit "/customers/#{@customer.id}"
 
-      save_and_open_page
       expect(page).to have_content("Customer: #{@customer.name}")
       within("li#item_#{@item_1.id}") do
         expect(page).to have_content(@item_1.name)
@@ -49,7 +48,7 @@ RSpec.describe '/customers/:customer_id', type: :feature do
     it 'when I fill in field with item id i am redirected to page and now see item' do
       visit "/customers/#{@customer.id}"
 
-      fill_in 'item_id', with: "#{item_4.id}"
+      fill_in 'item_id', with: "#{@item_4.id}"
       click_button 'Add Item'
 
       expect(current_path).to eq("/customers/#{@customer.id}")

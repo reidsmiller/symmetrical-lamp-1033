@@ -4,9 +4,8 @@ class CustomersController < ApplicationController
   end
 
   def update
-    @customer = Customer.find(params[:customer_id])
     if params[:commit] == "Add Item"
-      @customer.add_item(params[:item_id])
+      CustomerItem.add_item(params)
     end
     redirect_to "/customers/#{params[:customer_id]}"
   end

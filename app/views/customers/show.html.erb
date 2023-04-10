@@ -14,4 +14,4 @@
 <%= form_with url: "/customers/#{@customer.id}", method: :patch, local: true do |f| %>
   <%= f.text_field :item_id %>
   <%= f.submit "Add Item" %>
-<%= end %>
+<% end %>
