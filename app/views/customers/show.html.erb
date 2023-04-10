@@ -11,7 +11,8 @@
   <% end %>
 </ol>
 
-<%= form_with url: "/customers/#{@customer.id}", method: :patch, local: true do |f| %>
+<%= form_with url: "/customer_items/new", method: :post, local: true do |f| %>
+  <%= f.hidden_field :customer_id, value: @customer.id %>
   <%= f.text_field :item_id %>
   <%= f.submit "Add Item" %>
 <% end %>
