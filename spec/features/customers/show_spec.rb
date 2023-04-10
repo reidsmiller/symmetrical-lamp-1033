@@ -18,6 +18,7 @@ RSpec.describe '/customers/:customer_id', type: :feature do
     it 'I see the customers name and a list of its items including price and name of supermarket' do
       visit "/customers/#{@customer.id}"
 
+      save_and_open_page
       expect(page).to have_content("Customer: #{@customer.name}")
       within("li#item_#{@item_1.id}") do
         expect(page).to have_content(@item_1.name)
@@ -30,7 +31,7 @@ RSpec.describe '/customers/:customer_id', type: :feature do
         expect(page).to have_content("Price: #{@item_2.price}")
         expect(page).to have_content("Supermarket: #{@supermarket.name}")
       end
-
+      
       within("li#item_#{@item_3.id}") do
         expect(page).to have_content(@item_3.name)
         expect(page).to have_content("Price: #{@item_3.price}")
