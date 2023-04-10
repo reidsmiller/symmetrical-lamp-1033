@@ -38,5 +38,22 @@ RSpec.describe '/customers/:customer_id', type: :feature do
         expect(page).to have_content("Supermarket: #{@supermarket.name}")
       end
     end
+
+    it 'I see a form to add an item to this customer' do
+      visit "/customers/#{@customer.id}"
+
+      expect(page).to have_field("item_id")
+      expect(page).to have_button("Add Item")
+    end
+
+    it 'when I fill in field with item id i am redirected to page and now see item' do
+      visit "/customers/#{@customer.id}"
+
+      fill_in 'item_id', with: "#{item_4.id}"
+      click_button 'Add Item'
+
+      expect(current_path).to eq("/customers/#{@customer.id}")
+      expect(page).to have_content(@item_4.name)
+    end
   end
 end
